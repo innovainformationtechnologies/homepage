@@ -1,0 +1,27 @@
+<div class="about_container">
+    <div class="about_body">
+        <h3>About</h3>
+        <img class="about_image" src="img/logo.png" alt="logo">
+        <p class="text"></p>
+        <p>Powered By Innova</p>
+    </div>
+    <style>
+        .about_image{
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                const element = document.getElementById(`${data.id}`)
+                element.querySelector(".text").innerText = data.text
+                element.querySelector("img").src = data.image_url
+            }
+
+            window.componentRegistry.register("about", init)
+        })()
+    </script>
+</div>

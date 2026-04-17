@@ -1,0 +1,47 @@
+<div class="flex_row_container">
+    <div id="flex_row" class="flex_row_body">
+    </div>
+    <style>
+        .flex_row_container{
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 10vh auto;
+        }
+        .flex_row_body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                console.log("flex ", data)
+                const element = document.getElementById(`${data.id}`)
+                element.style.display = "flex"
+                element.style.flexWrap = "wrap"
+                element.style.flexDirection = "row"
+                element.style.justifyContent = "center"
+                element.style.justifyItems = "center"
+                element.style.alignItems = "center"
+                element.style.alignContent = "center"
+                element.style.alignSelf = "center"
+                element.style.gap = data.gap
+                element.style.margin = "auto"
+                // flex column if screen width is less than 600px
+                if(window.innerWidth < 1000){
+                    element.style.flexDirection = "column"
+                }
+            }
+
+            window.componentRegistry.register("flex_row", init)
+        })()
+    </script>
+</div>

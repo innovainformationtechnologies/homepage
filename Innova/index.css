@@ -1,0 +1,119 @@
+/* :root{
+    --background: #1e1e1e;
+    --text: #fff;
+    --theme-primary: #333;
+    --font_family_heading: "Impact", sans-serif;
+    --font_family_primary: "Open Sans", sans-serif;
+    --font_size_base: 1rem;
+} */
+html {
+	scroll-behavior: smooth;
+	height: 100%;
+	width: 100%;
+	background-color: var(--background) !important;
+	color: var(--text) !important;
+}
+body {
+    max-width: 100vw !important;
+    background-color: var(--background) !important;
+	color: var(--text) !important;
+	font-family: mono;
+    font-size: var(--font_size_base) !important;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--font_family_heading) !important;
+    color: var(--text) !important;
+}
+h1{
+    font-size: var(--font_size_h1) !important;
+}
+h2{
+    font-size: var(--font_size_h2) !important;
+}
+h3{
+    font-size: var(--font_size_h3) !important;
+}
+h4{
+    font-size: var(--font_size_h4) !important;
+}
+.spacer{
+    width: 100%;
+    margin: auto;
+}
+.slot{
+    width: 100% !important;
+    margin: 0px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+nav, #nav, .navbar-default, .navbar-static-top{
+    background-color: var(--theme-transparent) !important;
+    background-image: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#nav{
+    position: fixed;
+    top: 0;
+    margin: 0 !important;
+    padding: 1.5rem 2rem;
+    width: 100%;
+    
+}
+.navbar-toggler{
+    display: none !important;
+    float: right;
+    max-width: fit-content;
+}
+.navbar-brand{
+    margin: 1rem !important;
+    color: var(--text) !important;
+    text-shadow: none;
+}
+.btn-secondary{
+    color: var(--text) !important;
+}
+
+.btn-primary{
+    background-image: none;
+    background: none !important;
+    border: 4px var(--text) solid !important;
+    color: var(--text) !important;
+    font-size: var(--font_size_h2);
+    font-weight: bolder;
+    text-shadow: var(--primary_color) 0 0 5px;
+    box-shadow: var(--primary_color) 0 0 20px;
+}
+
+#hero, #catalog-container, #contact-container, #about-container{
+    margin: 10vh auto;
+    &>.row{
+        margin: auto;
+    }
+}
+#about-container>row{
+    display: flex;
+    flex-direction: row;
+}
+
+.jumbotron{
+    background-color: var(--theme-transparent) !important;
+}
+
+@media screen and (max-width: 1000px){
+    #nav{
+        padding: 0 1rem;
+    }
+    .navbar-collapse{
+        display: inline-block !important;
+        &.collapse{
+            display: none !important;
+        }
+    }
+    body{
+        font-size: var(--font_size_small);
+    }
+}

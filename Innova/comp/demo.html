@@ -1,0 +1,100 @@
+<div class="demo_container">
+    <div id="demo" class="demo_body">
+        <h1 class="text1">Portfolio</h1>
+        <div id="demo_tabs"></div>
+        <iframe id="demo_frame"></iframe>
+        <a id="demo_url">View Live</a>
+        <h2 class="text2">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla eget elit dictum varius. Maecenas risus mi, porta mattis nulla vitae, ultricies lorem.
+        </h2>
+        <a class="btn btn-lg" id="learn_more">Read The Docs</a>
+    </div>
+    <style>
+        .demo_container{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            margin: 5vh auto;
+        }
+        .demo_body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+            & > .text1, & > .text2{
+                color: var(--background) !important;
+            }
+        }
+        .tab{
+            background-color: grey;
+            color: var(--text);
+            padding: 1rem;
+            cursor: pointer;
+        }
+        iframe{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                var tabs = {}
+                var currentTab
+                console.log("demo data ", data)
+                const element = document.getElementById(`${data.id}`)
+                element.querySelector(".text1").innerHTML = data.text1
+                element.querySelector(".text2").innerHTML = data.text2
+                element.querySelector("#learn_more").href = data.cta_url
+                element.style.backgroundColor = "var(--text)"
+                element.style.color = "var(--background)"
+                
+                // get number of tabs
+                Object.entries(data).forEach((item, index) => {
+                    if (item[0].includes("tab")) {
+                        currentTab =  item[1]
+                        return
+                    }
+                    if (currentTab && item[0].includes("url")) {
+                        tabs[currentTab] = item[1]
+                        currentTab = null
+                        return
+                    }
+                })
+
+                // create tabs
+                // console.log("tabs ", tabs)
+                Object.entries(tabs).forEach((item, index) => {
+                    console.log("key ", item[0], ", value ", item[1])
+                    let tab = document.createElement("button")
+                    tab.classList.add("tab")
+                    tab.id = item[0]
+                    tab.innerHTML = item[0]
+                    let url = item[1]
+                    // check if url has protocol
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "https://" + url
+                    }
+                    tab.addEventListener("click", () => {
+                        element.querySelector("#demo_frame").src = url
+                        element.querySelector("#demo_url").href = url
+                    })
+                    if (index == 0) {
+                        element.querySelector("#demo_frame").src = url
+                        element.querySelector("#demo_url").href = url
+                    }
+                    element.querySelector("#demo_tabs").appendChild(tab)
+                })
+            }
+
+            window.componentRegistry.register("demo", init)
+        })()
+    </script>
+</div>

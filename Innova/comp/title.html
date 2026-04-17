@@ -1,0 +1,40 @@
+<div class="title_container">
+    <div class="title_body">
+        <h1 class="text1 title">Onyx Audio Tech</h1>
+    </div>
+    <style>
+        .title_container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 10vh auto 0 auto;
+        }
+        .title_body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .title{
+            font-size: var(--font_size_title) !important;
+            text-align: center;
+            /* border-bottom: 1px solid var(--text); */
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                const element = document.getElementById(`${data.id}`)
+                element.querySelector(".text1").innerText = data.text1
+                element.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*1.5}px`)
+                console.log(element.style.getPropertyValue('--font_size_title'))
+            }
+            window.componentRegistry.register("title", init)
+        })()
+    </script>
+</div>

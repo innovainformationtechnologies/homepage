@@ -1,0 +1,52 @@
+<div class="service_container">
+    <div class="service_body">
+        <h1 class="text1">Service 1: Website Development</h1>
+        <img class="service_image" src="img/logo.png" alt="service image">
+        <p class="text2">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla eget elit dictum varius. Maecenas risus mi, porta mattis nulla vitae, ultricies lorem.
+        </p>
+        <div class="cta">
+            <a class="btn btn-lg btn-primary" href="mailto:info@example.com">Get in touch</a>
+        </div>
+    </div>
+    <style>
+        .service_container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 10vh auto;
+        }
+        .service_body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .service_image{
+            width: 100%;
+            height: 60vh;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                const element = document.getElementById(`${data.id}`)
+                element.querySelector(".text1").innerText = data.text1
+                element.querySelector(".text2").innerText = data.text2
+                element.querySelector(".cta").querySelector("a").href = data.cta_url
+                element.querySelector(".cta").querySelector("a").innerText = data.price
+                element.querySelector(".service_image").src = data.image_url
+            }
+            
+
+            window.componentRegistry.register("service", init)
+        })()
+    </script>
+</div>

@@ -1,0 +1,56 @@
+<div class="hero_container">
+    <div id="hero" class="hero_body">
+            <h1 class="text1 title">Welcome to Onyx Audio Tech</h1>
+            <div class="cta">
+                <a class="btn btn-lg btn-primary">Join Our Discord</a>
+            </div>
+    </div>
+    <style>
+        .hero_container{
+            width: 100vw;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 10vh auto;
+        }
+        .hero_body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 0 0 10px var(--background);
+        }
+        .cta{
+            margin: 2rem 0;
+        }
+        #hero>.title{
+            font-size: var(--font_size_title) !important;
+            text-align: center;
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                const hero = document.getElementById(`${data.id}`)
+                hero.querySelector(".text1").textContent = data.text1
+                hero.querySelector(".cta").querySelector("a").href = data.cta_url
+                hero.querySelector(".cta").querySelector("a").innerText = data.cta
+                hero.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*2}px`)
+                console.log(hero.style.getPropertyValue('--font_size_title'))
+                hero.style.backgroundImage = `url(${data.bg_image_url})`
+                hero.style.backgroundSize = "contain"
+                hero.style.backgroundBlendMode = "normal"
+                hero.style.backgroundColor = "var(--background)"
+                hero.style.backgroundPosition = "center"
+                hero.style.backgroundRepeat = "no-repeat"
+                hero.style.width = "100%"
+                hero.style.height = "100%" 
+                hero.style.margin = "0"
+            }
+
+            window.componentRegistry.register("hero", init)
+        })()
+    </script>
+</div>

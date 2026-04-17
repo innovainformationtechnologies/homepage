@@ -1,0 +1,19 @@
+<div class="about_container">
+    <div class="about_body">
+        <a>Powered By Innova</a>
+    </div>
+    <style>
+        .about_body{
+            margin: 10vh auto;
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                console.log("Powered By Innova")
+            }
+
+            window.componentRegistry.register("about", init)
+        })()
+    </script>
+</div>
