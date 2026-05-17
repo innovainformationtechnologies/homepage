@@ -75,6 +75,8 @@ nav, #nav, .navbar-default, .navbar-static-top{
 }
 .btn-secondary{
     color: var(--text) !important;
+    font-size: var(--font_size_h2);
+    text-shadow: var(--primary_color) 0 0 5px;
 }
 
 .btn-primary{
@@ -101,6 +103,24 @@ nav, #nav, .navbar-default, .navbar-static-top{
 
 .jumbotron{
     background-color: var(--theme-transparent) !important;
+}
+
+.flex{
+    width: 100%;
+    height: 100%;
+    display: flex;
+        
+    &.row{
+        flex-direction: row;
+    }
+    &.col{
+        display: flex;
+        flex-direction: column;
+    }
+    &.center{
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 @media screen and (max-width: 1000px){

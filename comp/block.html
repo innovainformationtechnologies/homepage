@@ -1,10 +1,24 @@
+<!-------------------------------------
+Block
+Author: Innova Information Technologyies
+Args: id, text, width
+--------------------------------------->
+
 <div class="block_container">
     <div class="block_body">
         <p class="text"></p>
     </div>
     <style>
-        .block_image{
-            width: 100%;
+         .block_container{
+            /* width: 80vw; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 10vh auto;
+        }
+        .block_body{
+            width: 40rem;
             height: auto;
             object-fit: cover;
             border-radius: 1rem;
@@ -15,6 +29,7 @@
             function init(data){
                 const element = document.getElementById(`${data.id}`)
                 element.querySelector(".text").innerText = data.text
+                element.querySelector(".block_body").style.width = data.width
             }
 
             window.componentRegistry.register("block", init)

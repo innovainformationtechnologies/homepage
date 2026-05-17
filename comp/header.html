@@ -1,0 +1,42 @@
+<!-------------------------------------
+Header
+Author: Innova Information Technologyies
+Args: id, title
+--------------------------------------->
+
+<div class="header_container">
+    <div class="header_body">
+		<h1 class="title">Vorchestra</h1>
+		<div>
+			<button class="btn-primary"><span class="text">Restart</span></button>
+		</div>
+    </div>
+    <style>
+		.header_body{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem;
+		}
+		.header_container{
+			position: static;
+			top: 0;
+			left: 0;
+			right: 0;
+			width: 100vw;
+			z-index: 100;
+		}
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                const element = document.getElementById(`${data.id}`)
+				
+				element.querySelector(".text").innerText = data.title
+            }
+
+            window.componentRegistry.register("log", init)
+        })()
+    </script>
+</div>

@@ -2,7 +2,10 @@
     <div id="hero" class="hero_body">
             <h1 class="text1 title">Welcome to Onyx Audio Tech</h1>
             <div class="cta">
-                <a class="btn btn-lg btn-primary">Join Our Discord</a>
+                <a class="btn btn-lg btn-primary" id="store">Store</a>
+            </div>
+            <div class="cta">
+                <a class="btn btn-lg btn-secondary" id="affiliates">Work with us</a>
             </div>
     </div>
     <style>
@@ -20,10 +23,15 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 4rem;
             text-shadow: 0 0 10px var(--background);
         }
         .cta{
             margin: 2rem 0;
+            transition: all 0.5s ease-in-out;
+            &:hover{
+                transform: scale(1.08);
+            }
         }
         #hero>.title{
             font-size: var(--font_size_title) !important;
@@ -35,8 +43,10 @@
             function init(data){
                 const hero = document.getElementById(`${data.id}`)
                 hero.querySelector(".text1").textContent = data.text1
-                hero.querySelector(".cta").querySelector("a").href = data.cta_url
-                hero.querySelector(".cta").querySelector("a").innerText = data.cta
+                hero.querySelector("#store").href = data.cta_url
+                hero.querySelector("#store").innerText = data.cta
+                hero.querySelector("#affiliates").innerText = data.cta2
+                hero.querySelector("#affiliates").href = data.cta2_url
                 hero.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*2}px`)
                 console.log(hero.style.getPropertyValue('--font_size_title'))
                 hero.style.backgroundImage = `url(${data.bg_image_url})`

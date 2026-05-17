@@ -76,23 +76,46 @@ async function loadComponent(comp, parent) {
     return div
 }
 
-async function getCSVContents() {
+async function getCSVContents(local, remote) {
   try {
     let config = await fetch("./static/config.json").then(response => response.json());
-    const csvData = config.debug ? await getCSVFromFile('./static/sheet.csv') : await getCSVFromGoogleSheet(config.sheet_url);
-    
+    const csvData = config.debug ? await getCSVFromFile(local) : await getCSVFromGoogleSheet(remote);
+    // console.log("got data", csvData)
     return csvData
-    console.log("got data", csvData)
   } catch (error) {
     console.error('Error fetching or parsing CSV:', error);
   }
 }
 
+function adjustFontSizeOnResize(item) {
+  let on_desktop = window.innerWidth > 1000
+  console.log("on_desktop: ", on_desktop)
+  document.body.style.setProperty('--font_size_small', `${item.font_size_base*0.5}px`);
+  document.body.style.setProperty('--font_size_base', `${item.font_size_base}px`);
+  document.body.style.setProperty('--font_size_h1', `${item.font_size_base*2}px`);
+  document.body.style.setProperty('--font_size_h2', `${Math.floor(item.font_size_base*1.5)}px`);
+  document.body.style.setProperty('--font_size_h3', `${Math.floor(item.font_size_base*1.25)}px`);
+  document.body.style.setProperty('--font_size_h4', `${item.font_size_base}px`);
+  document.body.style.setProperty('--font_size_title', `${item.font_size_base*4}px`);
+  if (on_desktop) {
+    document.body.style.setProperty('--font_size_small', `${item.font_size_base}px`); 
+    document.body.style.setProperty('--font_size_base', `${item.font_size_base*2}px`); 
+    document.body.style.setProperty('--font_size_h1', `${item.font_size_base*4}px`);
+    document.body.style.setProperty('--font_size_h2', `${item.font_size_base*3}px`);
+    document.body.style.setProperty('--font_size_h3', `${Math.floor(item.font_size_base*2.5)}px`);
+    document.body.style.setProperty('--font_size_h4', `${item.font_size_base*2}px`);
+    document.body.style.setProperty('--font_size_title', `${item.font_size_base*4}px`);
+
+  }
+}
+
+
 function buildPage(csvData) {
     let data = csvData
     console.log("building page")
-  data.forEach(async (item) => {
+    data.forEach(async (item) => {
       console.log("adding",item)
+
       if (item.component == "theme"){
           // for each key in item, set the corresponding css variable
           for (const [key, value] of Object.entries(item)) {
@@ -102,29 +125,23 @@ function buildPage(csvData) {
             }
             document.body.style.setProperty(`--${key}`, value);
           }
+          // adjust font size on resize
+          window.onresize =() => {
+            // alert("resize")
+            adjustFontSizeOnResize(item)
+          }
+
+          adjustFontSizeOnResize(item)
 
           // document.body.style.setProperty('--background', item.bg_color);
           // document.body.style.setProperty('--text', item.text_color);
           // document.body.style.setProperty('--theme-primary', item.accent_color);
           // document.body.style.setProperty('--font_family_heading', item.font_family_heading);
           // document.body.style.setProperty('--font_family_body', item.font_family_body);
-          if (window.innerWidth < 1000) { // use larger font size on mobile
-            document.body.style.setProperty('--font_size_base', `${item.font_size_base*2}px`); 
-            document.body.style.setProperty('--font_size_h1', `${item.font_size_base*4}px`);
-            document.body.style.setProperty('--font_size_h2', `${item.font_size_base*3}px`);
-            document.body.style.setProperty('--font_size_h3', `${item.font_size_base*2.5}px`);
-            document.body.style.setProperty('--font_size_h4', `${item.font_size_base*2}px`);
-            
-          } else {
-            document.body.style.setProperty('--font_size_base', `${item.font_size_base}px`);
-            document.body.style.setProperty('--font_size_h1', `${item.font_size_base*2}px`);
-            document.body.style.setProperty('--font_size_h2', `${item.font_size_base*1.5}px`);
-            document.body.style.setProperty('--font_size_h3', `${item.font_size_base*1.25}px`);
-            document.body.style.setProperty('--font_size_h4', `${item.font_size_base}px`);
-          }
+          
 
           // document.getElementById("logo").src = item.logo
-          document.getElementById("title").innerText = item.title
+          // document.getElementById("title").innerText = item.title
           return
       }
       let slot=document.createElement("div")
@@ -134,6 +151,7 @@ function buildPage(csvData) {
       if ("parent_id" in item && item.parent_id != null ){
         console.log("parent id", item.parent_id)
         document.getElementById(item.parent_id).appendChild(slot)
+        slot.style.maxWidth = "fit-content"
         await loadComponent(item.component, document.getElementById(slot.id)).then((comp) => {
           window.componentRegistry.get(item.component)(item);
         })
@@ -145,7 +163,14 @@ function buildPage(csvData) {
         })
       }
         
-    });
+    })
+    let subfooter = document.createElement("div")
+    subfooter.id = "subfooter"
+    subfooter.classList.add("slot")
+    document.getElementById("body").appendChild(subfooter)
+    subfooter.innerHTML = `<a id="power" href="https://innovainformationtechnologies.netlify.app/">Powered By Innova</a>`
+    document.getElementById("power").style.margin = "4rem"
+    
 }
 
 
@@ -253,5 +278,7 @@ window.componentRegistry = {
         return this.components[name];
     }
 }
+const componentRegistry = window.componentRegistry
+const messageBus = window.messageBus
 
-export { getCSVContents, buildPage}
+export { getCSVContents, buildPage, loadComponent, componentRegistry, messageBus }
