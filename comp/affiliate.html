@@ -11,7 +11,7 @@
                 <div class="cta">
                     <a class="btn btn-lg btn-primary" id="affiliates">Get Started</a>
                 </div>
-                <div class="cta" hidden>
+                <div class="cta">
                     <a class="btn btn-lg btn-secondary" id="manifesto">Learn More</a>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 element.querySelector("#affiliates").innerText = data.cta
                 element.querySelector("#affiliates").href = data.cta_url
                 element.querySelector("#body").innerText = data.body
-
+                element.querySelector("#manifesto").href = data.cta2_url
                 element.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*1.5}px`)
                 console.log(element.style.getPropertyValue('--font_size_title'))
             }
