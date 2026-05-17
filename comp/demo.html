@@ -8,7 +8,7 @@
         <h2 class="text2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla eget elit dictum varius. Maecenas risus mi, porta mattis nulla vitae, ultricies lorem.
         </h2>
-        <a class="btn btn-lg" id="learn_more">Read The Docs</a>
+        <a class="btn btn-lg" id="learn_more"></a>
     </div>
     <style>
         .demo_container{
@@ -52,6 +52,7 @@
                 const element = document.getElementById(`${data.id}`)
                 element.querySelector(".text1").innerHTML = data.text1
                 element.querySelector(".text2").innerHTML = data.text2
+                element.querySelector("#learn_more").innerHTML = data.cta || "Learn More"
                 element.querySelector("#learn_more").href = data.cta_url
                 element.style.backgroundColor = "var(--text)"
                 element.style.color = "var(--background)"
