@@ -1,3 +1,9 @@
+<!-------------------------------------
+Product Card
+Author: Innova Information Technologyies
+Args: id, title, body, cta_url, price, image_url
+--------------------------------------->
+
 <div class="card_container">
     <div id="card" class="card_body">
         <img class="card_image" src="static/innova_logo.png" alt="service image">
@@ -11,15 +17,18 @@
     </div>
     <style>
         .card_container{
-            width: 30vh;
-            height: 60vh;
+            max-width: 35rem;
             background-color: var(--text);
             display: flex;
             flex-direction: column;
             justify-content: left;
             align-items: left;
-            margin: 10vh auto;
+            margin: auto auto;
             border-radius: 1rem;
+            transition: all 0.5s ease-in-out;
+            &:hover{
+                transform: scale(1.08);
+            }
         }
         
         .card_body{
@@ -32,37 +41,51 @@
             padding: 1rem;
             & > h1{
                 color: var(--background) !important;
+                font-size: var(--font_size_h2) !important;
             }
             & > p{
                 color: var(--background) !important;
                 opacity: 80%;
+                height: 20rem;
             }
         }
         .card_image{
-            height: 50%;
+            /* position: relative; */
+            height: 20rem;
             object-fit: cover;
             border-radius: 1rem;
         }
         .cta{
             margin: auto;
         }
+        @media screen and (max-width: 1000px) {
+            .card_container{
+                min-width: 80vw !important;
+                max-height: none;
+                max-width: none !important;
+                &:hover{
+                    transform: scale(1.05);
+                }
+            }
+        }
     </style>
     <script>
         (function(){
+
             function init(data){
                 console.log("card data ", data)
                 const element = document.getElementById(`${data.id}`)
-                element.querySelector(".text1").innerText = data.text1
-                element.querySelector(".text2").innerText = data.text2
+                element.querySelector(".text1").innerText = data.title
+                element.querySelector(".text2").innerText = data.body
                 element.querySelector(".cta").querySelector("a").href = data.cta_url
                 element.querySelector(".cta").querySelector("a").innerText = data.price
                 element.querySelector(".card_image").src = data.image_url
-                element.style.maxWidth = "30vh"
-                element.style.margin = "auto"
+                console.log(window.innerWidth)
+                
             }
             
 
-            window.componentRegistry.register("card", init)
+            window.componentRegistry.register("product_card", init)
         })()
     </script>
 </div>
