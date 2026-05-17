@@ -5,7 +5,7 @@
         <div class="flex row center content">
             <img class="affiliate_image" src="static/innova_logo.png" alt="logo">
             <div class="flex col">
-                <p>
+                <p id="body">
                     Work with us and help make the internet more independent for everyone. The SheetSite framework is open source and free to use, but you can earn 50% commission by selling templates and components.
                 </p>
                 <div class="cta">
@@ -51,7 +51,10 @@
         (function(){
             function init(data){
                 const element = document.getElementById(`${data.id}`)
+                element.querySelector("#affiliates").innerText = data.cta
                 element.querySelector("#affiliates").href = data.cta_url
+                element.querySelector("#body").innerText = data.body
+
                 element.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*1.5}px`)
                 console.log(element.style.getPropertyValue('--font_size_title'))
             }
