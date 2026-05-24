@@ -112,6 +112,7 @@ nav, #nav, .navbar-default, .navbar-static-top{
         
     &.row{
         flex-direction: row;
+        flex-wrap: wrap;
     }
     &.col{
         display: flex;
