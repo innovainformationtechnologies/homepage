@@ -134,7 +134,4 @@ nav, #nav, .navbar-default, .navbar-static-top{
             display: none !important;
         }
     }
-    body{
-        font-size: var(--font_size_small);
-    }
 }
