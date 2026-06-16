@@ -1,0 +1,107 @@
+<!-------------------------------------
+background
+Author: Innova Information Technologyies
+Args: id, title
+--------------------------------------->
+
+<div class="background_container">
+    <div class="background_body">
+		<div id="grid_canvas"></div>
+    </div>
+    <style>
+		.background_body{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem;
+		}
+		.background_container{
+			z-index: -10;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			width: 100vw;
+		}
+    </style>
+	<script>
+		(function () {
+			let p5js;
+
+			const sketch = function (s) {
+				let offset = 0;
+				const SPEED = 0.5;
+				const COLS = 11;
+				const ROWS = 14;
+				const COLOR = [70, 70, 70];
+				const HORIZON = 0.42;
+				const FADE_START = 0.85;
+
+				s.setup = function () {
+					let canvas = s.createCanvas(
+						s.windowWidth,
+						s.windowHeight
+					);
+					canvas.parent('grid_canvas');
+				};
+
+				s.draw = function () {
+					s.background(0, 0, 0, 50);
+					offset = (offset + SPEED) % (s.height * (1 - HORIZON) / ROWS);
+
+					const hy = s.height * HORIZON;
+					const vx = s.width / 2;
+
+					// Gradient radiating down from horizon
+					let grad = s.drawingContext.createLinearGradient(0, hy, 0, s.height);
+					grad.addColorStop(0,   'rgba(0, 106, 255, 0.1)');
+					grad.addColorStop(0.3, 'rgba(0, 0, 0, 0.0)');
+					grad.addColorStop(1,   'rgba(0, 106, 255,   0.01)');
+					
+
+					s.strokeWeight(1);
+					s.noFill();
+
+					for (let c = 0; c <= COLS; c++) {
+						let tx = s.map(c, 0, COLS, 0, s.width);
+						let bx = s.map(c, 0, COLS, vx - s.width * 2.5, vx + s.width * 2.5);
+						let alpha = 180 - s.abs(c - COLS / 2) * 20;
+						s.stroke(COLOR[0], COLOR[1], COLOR[2], alpha);
+						s.line(tx, hy, bx, s.height);
+					}
+
+					for (let r = 0; r <= ROWS; r++) {
+						let t = (r / ROWS) + offset / (s.height * (1 - HORIZON));
+						let y = s.lerp(hy, s.height, t * t);
+						if (y < hy) continue;
+
+						let progress = (y - hy) / (s.height - hy);
+						let alpha = progress > FADE_START
+							? s.map(progress, FADE_START, 1.0, 180, 0)
+							: s.map(progress, 0, 0.15, 0, 180);
+
+						s.stroke(COLOR[0], COLOR[1], COLOR[2], alpha);
+						let lx = s.lerp(vx - s.width * 2.5, 0, progress);
+						let rx = s.lerp(vx + s.width * 2.5, s.width, progress);
+						s.line(lx, y, rx, y);
+					}
+
+					s.drawingContext.fillStyle = grad;
+					s.drawingContext.fillRect(0, hy, s.width, s.height - hy);
+				};
+
+				s.windowResized = function () {
+					s.resizeCanvas(s.windowWidth, s.windowHeight);
+				};
+			};
+
+			async function init(data) {
+				const element = document.getElementById(data.id);
+				p5js = new p5(sketch, `#grid_canvas`);
+			}
+
+			window.componentRegistry.register("p5_background", init);
+		})();
+	</script>
+</div>

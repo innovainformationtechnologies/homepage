@@ -1,11 +1,11 @@
 <div class="affiliate_container">
     <div class="affiliate_body">
-        <h1 class="text1 title">Be The Change You Want To See</h1>
+        <h2 class="text1 title">Be The Change You Want To See</h2>
 
-        <div class="flex row center content">
+        <div class="flex row swap center content">
             <img class="affiliate_image" src="static/innova_logo.png" alt="logo">
-            <div class="flex col">
-                <p id="body">
+            <div class="flex col content_body">
+                <p>
                     Work with us and help make the internet more independent for everyone. The SheetSite framework is open source and free to use, but you can earn 50% commission by selling templates and components.
                 </p>
                 <div class="cta">
@@ -43,12 +43,19 @@
             justify-content: center;
             align-items: center;
         }
-        
-        .title{
+        .content_body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            width: 50rem
+        }
+        /* .title{
             font-size: var(--font_size_title) !important;
             text-align: center;
-            /* border-bottom: 1px solid var(--text); */
-        }
+            /* border-bottom: 1px solid var(--text); 
+        } */
     </style>
     <script>
         (function(){

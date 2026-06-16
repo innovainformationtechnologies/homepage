@@ -1,6 +1,6 @@
 <div class="hero_container">
     <div id="hero" class="hero_body">
-            <h1 class="text1 title">Welcome to Onyx Audio Tech</h1>
+            <h1 class="text1 title" id="title">Welcome to Onyx Audio Tech</h1>
             <div class="cta">
                 <a class="btn btn-lg btn-primary" id="store">Store</a>
             </div>
@@ -10,7 +10,7 @@
     </div>
     <style>
         .hero_container{
-            width: 100vw;
+            width: 80vw;
             height: 60vh;
             display: flex;
             flex-direction: column;
@@ -42,22 +42,22 @@
         (function(){
             function init(data){
                 const hero = document.getElementById(`${data.id}`)
-                hero.querySelector(".text1").textContent = data.text1
+                console.log("hero data ", data)
+                hero.querySelector("#title").innerText = data.tagline
                 hero.querySelector("#store").href = data.cta_url
-                hero.querySelector("#store").innerText = data.cta
+                hero.querySelector("#store").innerText = data.cta1
                 hero.querySelector("#affiliates").innerText = data.cta2
                 hero.querySelector("#affiliates").href = data.cta2_url
                 hero.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*2}px`)
                 console.log(hero.style.getPropertyValue('--font_size_title'))
-                hero.style.backgroundImage = `url(${data.bg_image_url})`
-                hero.style.backgroundSize = "contain"
-                hero.style.backgroundBlendMode = "normal"
-                hero.style.backgroundColor = "var(--background)"
-                hero.style.backgroundPosition = "center"
-                hero.style.backgroundRepeat = "no-repeat"
-                hero.style.width = "100%"
-                hero.style.height = "100%" 
-                hero.style.margin = "0"
+                let body = hero.querySelector(".hero_body")
+                body.style.backgroundImage = `url(${data.bg_image_url})`
+                body.style.backgroundSize = "contain"
+                body.style.backgroundPosition = "center"
+                body.style.backgroundRepeat = "no-repeat"
+                body.style.width = "100%"
+                body.style.height = "100%" 
+                body.style.margin = "0"
             }
 
             window.componentRegistry.register("hero", init)
