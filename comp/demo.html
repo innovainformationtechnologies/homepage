@@ -57,29 +57,8 @@
     </style>
     <script>
         (function(){
-            function init(data){
-                var tabs = {}
-                var currentTab
-                console.log("demo data ", data)
-                const element = document.getElementById(`${data.id}`)
-                element.querySelector(".text1").innerHTML = data.text1
-                element.querySelector(".text2").innerHTML = data.text2
-                element.querySelector("#learn_more").innerHTML = data.cta || "Learn More"
-                element.querySelector("#learn_more").href = data.cta_url
-
-                // get number of tabs
-                Object.entries(data).forEach((item, index) => {
-                    if (item[0].includes("tab")) {
-                        currentTab =  item[1]
-                        return
-                    }
-                    if (currentTab && item[0].includes("url")) {
-                        tabs[currentTab] = item[1]
-                        currentTab = null
-                        return
-                    }
-                })
-
+            function create_desktop_tabs(tabs, element){
+                console.log("creating desktop tabs")
                 // create tabs
                 // console.log("tabs ", tabs)
                 Object.entries(tabs).forEach((item, index) => {
@@ -106,6 +85,67 @@
                         element.querySelector("#demo_url").href = event.target.value
                     })
                 })
+            }
+
+            function create_mobile_tabs(tabs, element){
+                console.log("creating mobile tabs")
+                let div = document.getElementById("demo_tabs")
+                let demo = document.createElement("select")
+                div.appendChild(demo)
+                Object.entries(tabs).forEach((item, index) => {
+                    console.log("key ", item[0], ", value ", item[1])
+                    let url = item[1]
+                    // check if url has protocol
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "https://" + url
+                    }
+                    let tab = document.createElement("option")
+                    tab.classList.add("tab")
+                    tab.id = item[0]
+                    tab.innerHTML = item[0]
+                    tab.value = url
+                    if (index == 0) {
+                        element.querySelector("#demo_frame").src = url
+                        element.querySelector("#demo_url").href = url
+                    }
+                    demo.appendChild(tab)
+                })
+                demo.addEventListener("change", event => {
+                    console.log("demo changed", event.target.value)
+                    element.querySelector("#demo_frame").src = event.target.value
+                    element.querySelector("#demo_url").href = event.target.value
+                })
+            }
+            function init(data){
+                var tabs = {}
+                var currentTab
+                console.log("demo data ", data)
+                const element = document.getElementById(`${data.id}`)
+                element.querySelector(".text1").innerHTML = data.text1
+                element.querySelector(".text2").innerHTML = data.text2
+                element.querySelector("#learn_more").innerHTML = data.cta || "Learn More"
+                element.querySelector("#learn_more").href = data.cta_url
+
+                // get number of tabs
+                Object.entries(data).forEach((item, index) => {
+                    if (item[0].includes("tab")) {
+                        currentTab =  item[1]
+                        return
+                    }
+                    if (currentTab && item[0].includes("url")) {
+                        tabs[currentTab] = item[1]
+                        currentTab = null
+                        return
+                    }
+                })
+
+                if (window.innerWidth > 1000) {
+                    console.log("creating tabs for desktop - window width", window.innerWidth)
+                    create_desktop_tabs(tabs, element)
+                } else {
+                    console.log("creating tabs for mobile - window width", window.innerWidth)
+                    create_mobile_tabs(tabs, element)
+                }
             }
 
             window.componentRegistry.register("demo", init)
