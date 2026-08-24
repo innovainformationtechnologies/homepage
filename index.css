@@ -123,8 +123,10 @@ nav, #nav, .navbar-default, .navbar-static-top{
 }
 select{
     width: 100%;
+    color: var(--primary_color)
 }
 .btn{
+    font-size: var(--font_size_h1) !important;
     font-weight: bolder;
 }
 .btn-secondary{
@@ -144,8 +146,8 @@ select{
 .btn-primary{
     background: var(--primary_color);
     color: var(--background);
-    font-size: var(--font_size_h3);
     border: none;
+    padding: 1rem 2rem !important;
     /* border-radius: 0.5rem !important; */
 }
 .btn-danger{
